@@ -43,7 +43,17 @@ var letterConversion = {
 	"G": 6,
 	"H": 7,
 	"I": 8,
-	"J": 9
+	"J": 9,
+//  "a": 0,
+//	"b": 1,
+//	"c": 2,
+//	"d": 3,
+//	"e": 4,
+//	"f": 5,
+//	"g": 6,
+//	"h": 7,
+//	"i": 8,
+//	"j": 9
 }
 
 // makes the grid columns and rows
@@ -99,6 +109,11 @@ var gameBoard = [
 				var fireVal;
 				var inputCount = 0;
 				var winCondition = 0;
+        var x = document.getElementById("hitSound");
+
+        function playAudio() {
+            x.play();
+        }
 
 function fireTorpedo() {
 
@@ -113,11 +128,14 @@ document.getElementById("tries").textContent = "You have won in " + inputCount +
 
 	console.log("The first input value is " + convertedFirstInput);
 	console.log("The second input value is " + secondInput);
-	if(gameBoard[convertedFirstInput][secondInput] == 1)
+	if(gameBoard[convertedFirstInput][secondInput - 1] == 1)
 	{
+    window.setTimeout(playAudio,1);
 		console.log("Hit");
 		document.getElementById("s" + convertedFirstInput + (secondInput - 1)).style.backgroundColor = "red";
 		winCondition++;
+    console.log(gameBoard[convertedFirstInput][secondInput - 1]);
+    gameBoard[convertedFirstInput][secondInput - 1] = 2;
 		if(winCondition == 17) {
 			modal.style.display = "block";
 			window.setTimeout(reloadPage,5000);
@@ -128,7 +146,12 @@ document.getElementById("tries").textContent = "You have won in " + inputCount +
 	}
 	else
 	{
+    if (gameBoard[convertedFirstInput][secondInput - 1] == 2) {
+    console.log("Null");
+  }
+    else if(gameBoard[convertedFirstInput][secondInput - 1] == 0) {
 		document.getElementById("s" + convertedFirstInput + (secondInput - 1)).style.backgroundColor = "grey";
 		console.log("Miss");
+  }
 	}
 }
